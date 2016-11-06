@@ -1,0 +1,9 @@
+#!/bin/bash
+
+OUT="build/boot.o"
+
+SOURCE_FILES="./src/boot.S"
+
+ADD_PARAMS="-mcpu=arm1176jzf-s -fpic -ffreestanding -c"
+
+arm-none-eabi-gcc -o $OUT $ADD_PARAMS $SOURCE_FILES

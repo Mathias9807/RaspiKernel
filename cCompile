@@ -1,0 +1,11 @@
+#!/bin/bash
+
+KERNEL="build/kernel.S"
+
+INCLUDE_DIRS="-I./src/"
+SOURCE_FILES="src/kernel.c"
+
+ADD_PARAMS="-std=c99 -nostartfiles -Wall -O0 \
+	-march=armv6 -mfpu=neon-vfpv4 -O3 -S"
+
+arm-none-eabi-gcc -o $KERNEL $SOURCE_FILES $INCLUDE_DIRS $ADD_PARAMS

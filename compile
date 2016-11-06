@@ -1,0 +1,16 @@
+#!/bin/bash
+
+KERNEL="build/kernel.img"
+ELF="build/kernel.elf"
+
+INCLUDE_DIRS="-I./src/"
+SOURCE_FILES="src/kernel.c build/boot.o"
+
+LINKER="-T source/linker.ld"
+
+ADD_PARAMS="-std=c99 -nostartfiles -nostdlib -ffreestanding -Wall \
+	-march=armv6 -mfpu=neon-vfpv4 -O3"
+
+arm-none-eabi-gcc -o $ELF $SOURCE_FILES $LINKER $INCLUDE_DIRS $ADD_PARAMS
+
+arm-none-eabi-objcopy $ELF -O binary $KERNEL

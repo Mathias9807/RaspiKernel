@@ -1,0 +1,10 @@
+#!/bin/sh
+
+if [ -z "$1" ]; then echo "No path specified"; exit 0; fi
+
+cp build/kernel.img $1/
+cp build/kernel.img $1/kernel7.img
+cp build/bootcode.bin $1/
+cp build/cmdline.txt $1/
+cp build/config.txt $1/
+cp build/start.elf $1/
