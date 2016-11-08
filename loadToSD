@@ -8,3 +8,5 @@ cp build/bootcode.bin $1/
 cp build/cmdline.txt $1/
 cp build/config.txt $1/
 cp build/start.elf $1/
+
+umount $1

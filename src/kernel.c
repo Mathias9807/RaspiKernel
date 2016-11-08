@@ -35,32 +35,29 @@ static void initGPIO(int gpio) {
 	set32(address, 1 << ((gpio % 10) * 3));
 }
 
-static void setGPIO(int gpio, int value) {
-	int job;
-	if (value) job = GPIO_SET1;
-	else job = GPIO_CLR1;
-
-	set32(GPIO_ADDR + job, 1 << gpio);
+static void setGPIO(int gpio, int action) {
+	set32(GPIO_ADDR + action + 4 * (gpio / 32), 1 << (gpio % 32));
 }
 
 void kernel(uint32_t r0, uint32_t r1, uint32_t atags) {
 	// Init GPIO pin
-	// set32(GPIO_ADDR + GPIO_ACT_BYTE_SET, 
-	// 	1 << (GPIO_ACT_PIN_OFFS * GPIO_BITS_PER_PIN));
-	// initGPIO(2);
-	set32(GPIO_ADDR + 0x4, 1 << (3 * 6));
-	set32(GPIO_ADDR + GPIO_CLR0, 1 << 16);
+	initGPIO(GPIO_ACT);
+	
+	// Light the ACT LED
+	setGPIO(GPIO_ACT, GPIO_SET0);
+
+	while (1) ;
 
 	// Blink ACT light
-	while (1) {
-		// setGPIO(2, 1);
-		set32(GPIO_ADDR + GPIO_CLR1, 1 << 16);
-		sleep_s(0.1);
+	// while (1) {
+	// 	// setGPIO(2, 1);
+	// 	set32(GPIO_ADDR + GPIO_CLR1, 1 << 16);
+	// 	sleep_s(0.1);
 
-		// setGPIO(2, 0);
-		set32(GPIO_ADDR + GPIO_SET1, 1 << 16);
-		sleep_s(0.9);
-	}
+	// 	// setGPIO(2, 0);
+	// 	set32(GPIO_ADDR + GPIO_SET1, 1 << 16);
+	// 	sleep_s(0.9);
+	// }
 
 	return;
 }
